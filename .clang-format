@@ -1,0 +1,105 @@
+# ClangFormat 配置文件
+# 用于统一 C++ 代码格式化风格
+---
+Language: Cpp                                      # 语言类型：C++
+BasedOnStyle: Google                               # 基础样式：基于 LLVM 代码风格
+
+# ===== 缩进和对齐设置 =====
+AccessModifierOffset: -4                          # 访问修饰符偏移量（相对于类体缩进-4个空格）
+AlignAfterOpenBracket: DontAlign                  # 开括号后的参数对齐方式：对齐到开括号
+AlignConsecutiveAssignments: true                 # 连续赋值语句对齐
+AlignConsecutiveDeclarations: true                # 连续声明语句对齐
+AlignOperands: true                               # 操作数不强制对齐
+AlignTrailingComments: true                       # 行尾注释对齐
+
+# ===== 换行设置 =====
+AlwaysBreakAfterReturnType: None                  # 返回类型后不强制换行
+AlwaysBreakTemplateDeclarations: Yes              # 模板声明总是换行
+BinPackArguments: true                             # 函数参数紧凑排列
+BinPackParameters: true                            # 函数参数紧凑排列
+
+# ===== 大括号换行设置 =====
+BraceWrapping: # 自定义大括号换行规则
+  AfterCaseLabel: true                             # case 标签后换行
+  AfterClass: true                                 # 类定义后换行
+  AfterControlStatement: true                      # 控制语句后换行
+  AfterEnum: true                                  # 枚举后换行
+  AfterFunction: true                              # 函数后换行
+  AfterNamespace: true                             # 命名空间后换行
+  AfterStruct: true                                # 结构体后换行
+  AfterUnion: true                                 # 联合体后换行
+  AfterExternBlock: true                           # extern 块后换行
+  BeforeCatch: true                                # catch 前换行
+  BeforeElse: true                                 # else 前换行
+  BeforeLambdaBody: true                           # lambda 函数体前换行
+  BeforeWhile: true                                # while 前换行（do-while）
+  SplitEmptyFunction: true                         # 空函数体换行
+  SplitEmptyRecord: true                           # 空记录体换行
+  SplitEmptyNamespace: true                        # 空命名空间换行
+
+BreakBeforeBraces: Custom                          # 大括号换行模式：自定义
+BreakBeforeTernaryOperators: true                  # 三元操作符前换行
+BreakConstructorInitializers: AfterColon          # 构造函数初始化列表在冒号后换行
+BreakConstructorInitializersBeforeComma: false    # 构造函数初始化列表逗号前不换行
+
+# ===== 行长度和空行设置 =====
+ColumnLimit: 300                                  # 行长度限制：300字符
+CompactNamespaces: false                           # 命名空间不紧凑显示
+ConstructorInitializerAllOnOneLineOrOnePerLine: false  # 构造函数初始化列表不强制单行或每行一个
+ContinuationIndentWidth: 4                        # 续行缩进宽度：4个空格
+
+# ===== 访问修饰符空行设置 =====
+EmptyLineAfterAccessModifier: Leave               # 访问修饰符后的空行：保持原样
+EmptyLineBeforeAccessModifier: Leave              # 访问修饰符前的空行：保持原样
+
+# ===== 头文件包含设置 =====
+IncludeBlocks: Preserve                            # 保持包含块的原有分组
+IncludeCategories: # 包含文件分类规则
+  - Regex: '^<.*'                                  # 系统头文件（<>包围）
+    Priority: 1                                    # 优先级1
+  - Regex: '^".*'                                  # 项目头文件（""包围）
+    Priority: 2                                    # 优先级2
+  - Regex: '.*'                                    # 其他文件
+    Priority: 3                                    # 优先级3
+IncludeIsMainRegex: '([-_](test|unittest))?$'     # 主文件识别正则表达式
+
+# ===== 缩进设置 =====
+IndentCaseBlocks: true                             # case 块缩进
+IndentCaseLabels: false                            # case 标签不缩进
+IndentPPDirectives: None                           # 预处理指令不缩进
+IndentWidth: 4                                     # 缩进宽度：4个空格
+IndentWrappedFunctionNames: false                  # 换行的函数名不缩进
+
+# ===== 宏设置 =====
+MacroBlockBegin: ''                                # 宏块开始标记（空）
+MacroBlockEnd: ''                                  # 宏块结束标记（空）
+MaxEmptyLinesToKeep: 3                             # 最多保留3个连续空行
+SeparateDefinitionBlocks: Always                  # 顶层函数/类等定义块之间始终保留一空行
+
+# ===== 命名空间和空格设置 =====
+NamespaceIndentation: All                          # 命名空间内所有内容都缩进
+SpaceAfterCStyleCast: false                        # C风格转换后不加空格
+SpaceAfterTemplateKeyword: true                    # template 关键字后加空格
+SpaceBeforeAssignmentOperators: true               # 赋值操作符前加空格
+SpaceBeforeInheritanceColon: true                  # 继承冒号前加空格
+SpaceBeforeParens: ControlStatements               # 控制语句的括号前加空格
+SpaceBeforeRangeBasedForLoopColon: true            # 范围for循环冒号前加空格
+SpaceBeforeSquareBrackets: false                   # 方括号前不加空格
+SpaceInEmptyParentheses: false                     # 空括号内不加空格
+SpacesBeforeTrailingComments: 1                    # 行尾注释前1个空格
+SpacesInAngles: false                              # 尖括号内不加空格
+SpacesInConditionalStatement: false                # 条件语句括号内不加空格
+SpacesInCStyleCastParentheses: false               # C风格转换括号内不加空格
+SpacesInParentheses: false                         # 圆括号内不加空格
+SpacesInSquareBrackets: false                      # 方括号内不加空格
+
+# ===== Tab和短语句设置 =====
+TabWidth: 4                                        # Tab宽度：4个空格
+UseTab: Never                                      # 永不使用Tab，只用空格
+AllowShortIfStatementsOnASingleLine: Never         # if语句不允许单行
+AllowShortBlocksOnASingleLine: false               # 代码块不允许单行
+AllowShortFunctionsOnASingleLine: false            # 函数不允许单行
+AllowShortLambdasOnASingleLine: Empty              # 只有空的lambda可以单行
+
+# ===== 注释设置 =====
+CommentPragmas: '^[^ ]'                           # 注释指令正则表达式
