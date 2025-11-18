@@ -16,7 +16,7 @@ Recording::Recording(QWidget *parent)
     recordThread = new RecordThread(this);
 
     connect(ui->startButton, &QPushButton::clicked, [this]() {
-        recordThread->startRecord("./", "output.avi", 1024, 1024, 10);
+        recordThread->startRecord("./", "output.avi", 1024, 1024, 30);
     });
     connect(ui->stopButton, &QPushButton::clicked, [this]() {
         recordThread->stopRecord();

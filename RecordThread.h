@@ -8,7 +8,6 @@
 #include <QObject>
 #include <QThread>
 #include <QTimer>
-#include <QVariant>
 #include <opencv2/opencv.hpp>
 
 Q_DECLARE_METATYPE(cv::Mat)
@@ -18,6 +17,7 @@ class RecordThread : public QObject
     Q_OBJECT
 signals:
     void sigStartRecord();
+    void sigStopRecord();
     void sigAppendFrame(const QVariant& frame);
 public:
     explicit RecordThread(QObject *parent = nullptr);
@@ -26,14 +26,12 @@ public:
     void stopRecord();
     void appendFrame(const QVariant& frame);
 
+
 private:
     void    setConnections();
     QThread recordThread;
     bool   isRecording = false;
     cv::VideoWriter writer;
-
-    QTimer *timer{nullptr};
-    std::deque<QVariant> frame_list;
 
     QString m_path;
     QString m_filename;
@@ -41,9 +39,6 @@ private:
     int m_height;
     int m_fps;
 protected:
-    void slotStartThread();
-
-    void slotTimerTimeout();
     void slotStartRecord();
     void slotStopRecord();
     void slotAppendFrame(const QVariant& frame);

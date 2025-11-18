@@ -32,7 +32,7 @@ void RecordThread::startRecord(QString path, QString filename, int width, int he
 
 void RecordThread::stopRecord()
 {
-    isRecording = false;
+    emit sigStopRecord();
 }
 
 void RecordThread::appendFrame(const QVariant &frame)
@@ -43,31 +43,8 @@ void RecordThread::appendFrame(const QVariant &frame)
 void RecordThread::setConnections()
 {
     connect(this, &RecordThread::sigStartRecord, this, &RecordThread::slotStartRecord, Qt::QueuedConnection);
+    connect(this, &RecordThread::sigStopRecord, this, &RecordThread::slotStopRecord, Qt::QueuedConnection);
     connect(this, &RecordThread::sigAppendFrame, this, &RecordThread::slotAppendFrame, Qt::QueuedConnection);
-}
-
-void RecordThread::slotStartThread()
-{
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &RecordThread::slotTimerTimeout,Qt::QueuedConnection);
-}
-
-void RecordThread::slotTimerTimeout()
-{
-    qDebug() << "RecordThread Timer Timeout in thread:" << QThread::currentThread();
-    if (!frame_list.empty())
-    {
-        QVariant frame = frame_list.front();
-        writer.write(frame.value<cv::Mat>());
-        frame_list.pop_front();
-    }else
-    {
-        if (!isRecording)
-        {
-            timer->stop();
-            writer.release();
-        }
-    }
 }
 
 void RecordThread::slotStartRecord()
@@ -82,11 +59,21 @@ void RecordThread::slotStartRecord()
     }
 }
 
+void RecordThread::slotStopRecord()
+{
+    isRecording = false;
+    if (writer.isOpened())
+    {
+        writer.release();
+    }
+}
+
 void RecordThread::slotAppendFrame(const QVariant &frame)
 {
     qDebug() << "slotAppendFrame";
-    if (isRecording)
+    if (isRecording && writer.isOpened())
     {
-        frame_list.push_back(frame);
+        cv::Mat mat_frame = frame.value<cv::Mat>();
+        writer.write(mat_frame);
     }
 }

@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (WIN32 AND NOT DEFINED OpenCV_DIR)
     # 典型安装结构示例：C:/opencv/build/x64/vc16/lib (里面有 OpenCVConfig.cmake)
     # 如果你的 OpenCVConfig.cmake 位于其它位置，请在 CMake 设置中覆盖 OpenCV_DIR。
-    set(OpenCV_DIR "C:/opencv/build")
+    set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib")
 endif()
 
 # 查找 OpenCV
@@ -40,6 +40,9 @@ set(PROJECT_SOURCES
         recording.ui
         RecordThread.cpp
         RecordThread.h
+        imageprocessing.cpp
+        imageprocessing.h
+        imageprocessing.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
